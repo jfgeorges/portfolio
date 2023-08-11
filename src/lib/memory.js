@@ -45,17 +45,21 @@ const animals = [
   "🐦",
 ];
 
-export const CARD_STATE = {
-  HIDE: "hide",
-  FIND: "find",
+export const CARD_STATUS = {
+  HIDDEN: "hidden",
+  FOUND: "found",
   RETURNED: "returned",
+};
+
+export const CARD_ACTION = {
+  UPDATE: "update",
 };
 
 export const getInitialMemory = () => {
   return shuffle([...animals, ...animals]).map((v, i) => ({
     id: `card-${v}-${i}`,
     emoji: v,
-    state: CARD_STATE.HIDE,
+    status: CARD_STATUS.HIDDEN,
   }));
 };
 
@@ -63,12 +67,13 @@ export const GAME_STATUS = {
   PLAYING: "playing",
   FINISHED: "finished",
   WAITING_FOR_SECOND_CARD: "waitingForSecondCard",
-  WAIT_FOR_CLEAR: "waitForReturn",
+  WAIT_FOR_CLEAR: "waitingForClear",
 };
 
 export const GAME_ACTION = {
-  ReturnCard: "ReturnCard",
-  Clear: "Clear",
+  RETURN_CARD: "ReturnCard",
+  CLEAR: "Clear",
+  RESET: "Reset",
 };
 
 export const isPairCards = (card1, card2) => {
@@ -76,5 +81,5 @@ export const isPairCards = (card1, card2) => {
 };
 
 export const isMemoryFinished = (cards) => {
-  return cards.every((card) => card.state === CARD_STATE.FIND);
+  return cards.every((card) => card.status === CARD_STATUS.FOUND);
 };

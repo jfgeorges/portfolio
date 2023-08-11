@@ -1,10 +1,12 @@
 import { Typography } from "../atom/Typography";
+import { MemoryCard } from "./MemoryCard";
+import { useMemoryContext } from "./MemoryProvider";
 
 export const MemoryBoard = () => {
   // Memory Game - Exercise
-  const cards = [];
+  const { cards, updateCard } = useMemoryContext();
 
-  if (!cards) {
+  if (!cards?.length) {
     return (
       <Typography variant="body2">
         An error occurs, there is no board.
@@ -13,8 +15,16 @@ export const MemoryBoard = () => {
   }
 
   return (
-    <div className="grid grid-cols-6 grid-rows-6 w-max gap-2">
-      {/* Memory Game - Exercise */}
+    <div className="grid w-max grid-cols-6 grid-rows-6 gap-2">
+      {cards.map((card) => (
+        <MemoryCard
+          key={card.id}
+          card={card}
+          onClick={() => updateCard(card.id)}
+        >
+          {card.emoji}
+        </MemoryCard>
+      ))}
     </div>
   );
 };
